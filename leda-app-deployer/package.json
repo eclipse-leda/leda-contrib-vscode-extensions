@@ -1,0 +1,232 @@
+{
+  "name": "leda-app-deployer",
+  "publisher": "eclipse-leda",
+  "repository": {
+    "url": "https://github.com/software-engineering-project-org/vscode-plugin-automotive-app-deployment.git"
+  },
+  "displayName": "LAD - Leda App Deployer",
+  "description": "Simply deploy Containerized-Software on your Target Devices that run Eclipse Leda",
+  "version": "0.0.1",
+  "license": "Apache 2.0",
+  "engines": {
+    "vscode": "^1.77.0"
+  },
+  "categories": [
+    "Testing"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsWelcome": [
+      {
+        "view": "devices",
+        "contents": "No device has been added yet.\n By clicking the '+' button or the button below you can add new devices.\n[Add Device](command:automotive-app-deployment.addDevice)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "leda-app-auto-deployer",
+          "title": "LAD - Leda App Deployer",
+          "icon": "$(target)"
+        }
+      ]
+    },
+    "views": {
+      "leda-app-auto-deployer": [
+        {
+          "id": "devices",
+          "name": "Devices",
+          "type": "tree"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "automotive-app-deployment.openUserManual",
+          "group": "navigation",
+          "when": "view == devices"
+        },
+        {
+          "command": "automotive-app-deployment.addDevice",
+          "group": "navigation",
+          "when": "view == devices"
+        },
+        {
+          "command": "automotive-app-deployment.refreshDevices",
+          "group": "navigation",
+          "when": "view == devices"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "automotive-app-deployment.deleteDevice",
+          "when": "view == devices",
+          "group": "inline"
+        },
+        {
+          "command": "automotive-app-deployment.editDevice",
+          "when": "view == devices",
+          "group": "inline"
+        },
+        {
+          "command": "automotive-app-deployment.deployVariant01",
+          "when": "view == devices",
+          "group": "inline"
+        },
+        {
+          "command": "automotive-app-deployment.deployVariant02",
+          "when": "view == devices",
+          "group": "inline"
+        },
+        {
+          "command": "automotive-app-deployment.deployVariant03",
+          "when": "view == devices",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "automotive-app-deployment",
+      "properties": {
+        "automotive-app-deployment.devices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "title": "Device object",
+            "required": [
+              "name",
+              "ip",
+              "sshPort",
+              "sshUsername"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Device name"
+              },
+              "ip": {
+                "type": "string",
+                "description": "Device IP"
+              },
+              "sshPort": {
+                "type": "number",
+                "description": "Device SSH port"
+              },
+              "sshUsername": {
+                "type": "string",
+                "description": "Device user login name"
+              },
+              "sshPassword": {
+                "type": "string",
+                "description": "Device user login password"
+              },
+              "sshPublicKeyPath": {
+                "type": "string",
+                "description": "path to public key"
+              },
+              "sshPrivateKeyPath": {
+                "type": "string",
+                "description": "path to private key"
+              }
+            }
+          },
+          "default": [],
+          "scope": "window",
+          "description": "Specifies the devices where applications can be deployed on."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "automotive-app-deployment.addDevice",
+        "title": "LAD: Add Device",
+        "icon": "$(plus)"
+      },
+      {
+        "command": "automotive-app-deployment.deleteDevice",
+        "title": "LAD: Delete Device",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "automotive-app-deployment.editDevice",
+        "title": "LAD: Edit Device",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "automotive-app-deployment.refreshDevices",
+        "title": "LAD: Refresh Devices",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "automotive-app-deployment.openUserManual",
+        "title": "LAD: Open User Manual",
+        "icon": "$(info)"
+      },
+      {
+        "command": "automotive-app-deployment.deployVariant01",
+        "title": "LAD: Deploy Variant 01",
+        "icon": "$(cloud)"
+      },
+      {
+        "command": "automotive-app-deployment.deployVariant02",
+        "title": "LAD: Deploy Variant 02",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "automotive-app-deployment.deployVariant03",
+        "title": "LAD: Deploy Variant 03",
+        "icon": "$(file-symlink-file)"
+      },
+      {
+        "command": "automotive-app-deployment.openConfig",
+        "title": "LAD: Open Config File"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "test-jest": "npx jest",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "cd .husky && ./pre-commit"
+    }
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/jsonpath": "^0.2.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/ssh2": "^1.11.11",
+    "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "@vscode/test-electron": "^2.3.0",
+    "eslint": "^8.36.0",
+    "glob": "^8.1.0",
+    "husky": "^8.0.0",
+    "mocha": "^10.2.0",
+    "prettier": "^3.0.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@octokit/rest": "^19.0.13",
+    "@types/ssh2-streams": "^0.1.9",
+    "axios": "^1.5.0",
+    "jsonpath": "^1.1.1",
+    "jsonpath-plus": "^7.2.0",
+    "node-ssh": "^13.1.0",
+    "path": "^0.12.7",
+    "winston": "^3.10.0"
+  }
+}
