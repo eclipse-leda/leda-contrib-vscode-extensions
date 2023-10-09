@@ -93,8 +93,9 @@ In this project, we have set up pre-commit hooks using Husky to ensure code qual
 
 0. Clone this repository.
 1. Run ```npm install```.
-2. Run ```npm run watch``` to start Dev-Mode. This opens a separate Window with a Visual Studio Code environment running the Extension for development.
-3. Refer to the User Manual (displayable in the plugin via info-button) or [README](README.md) to add target devices for testing.
+2. Run ```npm run watch``` for code compilation and a change watcher.
+3. Press F5 te start the VSCode development open in a seperate window.
+4. Refer to the User Manual (displayable in the plugin via info-button) or [README](README.md) to add target devices for testing.
 
 *Hint:* Refer to the [official Visual Studio Code Plugin Development Documentation](https://code.visualstudio.com/api/get-started/your-first-extension) to get further information on how to develop using the Visual Studio Code Extension API.
 
