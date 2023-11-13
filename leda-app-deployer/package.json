@@ -194,7 +194,7 @@
     "test": "node ./out/test/runTest.js",
     "test-jest": "npx jest",
     "format": "prettier --write \"src/**/*.ts\"",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install $npm_package_name/.husky"
   },
   "husky": {
     "hooks": {
